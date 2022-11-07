@@ -11,6 +11,7 @@ class Tool extends Component {
     }
   
     handleToolSelect = (e) => {
+        console.log("I am tool select");
         this.context.dispatch({type : "activateTool", data : {tool : this.props.type}});
         this.props.handleDeselectAllElements();
         this.props.registerDragHandler("drawCanvas", {

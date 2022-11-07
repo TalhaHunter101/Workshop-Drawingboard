@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import Select from './select';
 import Shape from './shape';
@@ -16,34 +16,34 @@ class Toolbar extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-          openSubMenu : null
+            openSubMenu: null
         };
     }
 
 
     handleSetCurrentOpenSubMenu = (openSubMenu) => {
         this.props.handleDeselectAllElements();
-        this.setState({openSubMenu});
+        this.setState({ openSubMenu });
     }
 
     handleElementDragMove(e) {
         const currentState = this.state;
         const newState = {};
-        if(currentState.elementBeingDrawn !== null) {
-            const newElementGraph = {...currentState.elements};
-            const newStyles = {...newElementGraph[currentState.elementBeingDrawn].styles};
+        if (currentState.elementBeingDrawn !== null) {
+            const newElementGraph = { ...currentState.elements };
+            const newStyles = { ...newElementGraph[currentState.elementBeingDrawn].styles };
             newElementGraph[currentState.elementBeingDrawn].styles = newStyles;
-            if(newElementGraph[currentState.elementBeingDrawn].fixedRatio) {
+            if (newElementGraph[currentState.elementBeingDrawn].fixedRatio) {
                 let multiplier = e.movementX;
-                if(e.movementY > multiplier) {
+                if (e.movementY > multiplier) {
                     multiplier = e.movementY;
                 }
-                newElementGraph[currentState.elementBeingDrawn].styles.width += multiplier*currentState.zoomLevel;
-                newElementGraph[currentState.elementBeingDrawn].styles.height += multiplier*currentState.zoomLevel;
+                newElementGraph[currentState.elementBeingDrawn].styles.width += multiplier * currentState.zoomLevel;
+                newElementGraph[currentState.elementBeingDrawn].styles.height += multiplier * currentState.zoomLevel;
 
             } else {
-                newElementGraph[currentState.elementBeingDrawn].styles.width += e.movementX*currentState.zoomLevel;
-                newElementGraph[currentState.elementBeingDrawn].styles.height += e.movementY*currentState.zoomLevel;
+                newElementGraph[currentState.elementBeingDrawn].styles.width += e.movementX * currentState.zoomLevel;
+                newElementGraph[currentState.elementBeingDrawn].styles.height += e.movementY * currentState.zoomLevel;
             }
             newState.elements = newElementGraph;
         }
@@ -57,7 +57,12 @@ class Toolbar extends Component {
 
         this.setState(newState);
     }
-  
+
+    handleAPI() {
+        console.log("Hi Talha!!!")
+    }
+
+
     render() {
         const {
             handleDeselectAllElements,
@@ -73,7 +78,7 @@ class Toolbar extends Component {
             <div className="toolbar_container"
             >
                 <div className="toolbar">
-                    <Select 
+                    <Select
                         handleDeselectAllElements={handleDeselectAllElements}
                         handleDrawCanvasShow={handleDrawCanvasShow}
                         registerDragHandler={registerDragHandler}
@@ -140,16 +145,16 @@ class Toolbar extends Component {
                         handleDragMove={this.handleElementDragMove}
                         handleDragEnd={this.handleDragEnd}
                         currentSelectedTool={currentSelectedTool}
-                    />
-                    <More 
-                         handleDeselectAllElements={handleDeselectAllElements}
-                         handleDrawCanvasShow={handleDrawCanvasShow}
-                         registerDragHandler={registerDragHandler}
-                         handleDragMove={this.handleElementDragMove}
-                         handleDragEnd={this.handleDragEnd}
-                         currentSelectedTool={currentSelectedTool}
-                         openSubMenu={this.state.openSubMenu}
-                         handleSetCurrentOpenSubMenu={this.handleSetCurrentOpenSubMenu}
+                    ></Image>
+                    <More
+                        handleDeselectAllElements={handleDeselectAllElements}
+                        handleDrawCanvasShow={handleDrawCanvasShow}
+                        registerDragHandler={registerDragHandler}
+                        handleDragMove={this.handleElementDragMove}
+                        handleDragEnd={this.handleDragEnd}
+                        currentSelectedTool={currentSelectedTool}
+                        openSubMenu={this.state.openSubMenu}
+                        handleSetCurrentOpenSubMenu={this.handleSetCurrentOpenSubMenu}
                     />
                 </div>
             </div>
@@ -157,15 +162,15 @@ class Toolbar extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(
+        if (
             this.props.currentSelectedTool === "pan" &&
-            this.state.openSubMenu !== null && 
+            this.state.openSubMenu !== null &&
             prevState.openSubMenu === this.state.openSubMenu
         ) {
-            this.setState({openSubMenu : null});
+            this.setState({ openSubMenu: null });
         }
     }
-    
-  }
 
-  export default Toolbar;
+}
+
+export default Toolbar;
